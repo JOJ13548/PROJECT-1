@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>JEFF — Web Design & Development</title>
+    <meta name="description" content="Web design and development course for beginners." />
+    <style>
+        :root{
+            --bg:#0f1724; --card:#0b1220; --accent:#06b6d4; --muted:#94a3b8; --glass: rgba(255,255,255,0.04);
+            --radius:12px; --max-width:1100px; --gap:1.25rem; --accent-2:#60a5fa;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            color-scheme: dark;
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+            margin:0;
+            background:linear-gradient(180deg, rgba(6,8,12,1) 0%, rgba(11,17,30,1) 100%);
+            color:#e6eef8;
+            -webkit-font-smoothing:antialiased;
+            line-height:1.4;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:2rem;
+            font-size:16px;
+        }
+        .visually-hidden{
+            position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap;border:0;padding:0;margin:-1px;
+        }
+        .container{
+            width:100%;
+            max-width:var(--max-width);
+            display:grid;
+            grid-template-columns: 1fr 360px;
+            gap:var(--gap);
+            align-items:start;
+        }
+
+        header.navbar{
+            grid-column:1 / -1;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:0.75rem;
+        }
+        .brand{display:flex;gap:.75rem;align-items:center}
+        .logo{
+            background:linear-gradient(90deg,var(--accent),var(--accent-2));
+            -webkit-background-clip:text;background-clip:text;color:transparent;
+            font-weight:700;font-size:1.25rem;letter-spacing:1px;
+        }
+        nav ul{display:flex;gap:1rem;list-style:none;padding:0;margin:0}
+        nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:.95rem}
+        nav a:hover{color:#fff}
+
+        .search form{display:flex;gap:.5rem;align-items:center}
+        .search input[type="search"]{
+            background:var(--glass);border:1px solid rgba(255,255,255,0.04);
+            padding:.5rem .75rem;border-radius:8px;color:inherit;min-width:200px;
+        }
+        .btn{
+            display:inline-block;padding:.6rem .9rem;border-radius:8px;
+            background:linear-gradient(90deg,var(--accent),var(--accent-2));
+            color:#06203a;font-weight:700;text-decoration:none;border:none;cursor:pointer;
+        }
+
+        main.hero{
+            background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border-radius:var(--radius);
+            padding:2rem;
+            min-height:320px;
+            box-shadow:0 6px 30px rgba(2,6,23,0.6);
+        }
+        .hero h1{font-size:2rem;margin:0 0 .5rem;line-height:1.05}
+        .hero h1 span{color:var(--accent);display:inline-block}
+        .hero p{color:var(--muted);margin:0 0 1.25rem}
+
+        aside.card{
+            background:rgba(255,255,255,0.02);
+            padding:1.25rem;border-radius:12px;border:1px solid rgba(255,255,255,0.02);
+        }
+        .form-group{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem}
+        input[type="email"],input[type="password"]{
+            padding:.6rem .75rem;border-radius:8px;border:1px solid rgba(255,255,255,0.04);
+            background:transparent;color:inherit;
+        }
+        .muted{color:var(--muted);font-size:.95rem}
+        .footer-note{grid-column:1 / -1;color:var(--muted);font-size:.9rem;margin-top:1rem}
+        @media (max-width:900px){
+            .container{grid-template-columns:1fr; padding:0}
+            aside.card{order:2}
+        }
+
+        /* small helpful tweaks injected by JS replicate here for initial paint */
+        .contact-popover{min-width:220px;padding:.5rem;border-radius:10px;background:var(--card);border:1px solid rgba(255,255,255,0.04);box-shadow:0 8px 30px rgba(2,6,23,0.6);position:absolute;z-index:10000}
+        .contact-popover button{display:block;width:100%;}
+    </style>
+</head>
+<body>
+    <div class="container" role="region" aria-label="Main content">
+        <header class="navbar" role="banner">
+            <div class="brand" aria-hidden="false">
+                <div class="logo">JEFF</div>
+                <div class="muted">Web Studio</div>
+            </div>
+
+            <nav role="navigation" aria-label="Primary">
+                <ul>
+                    <li><a href="#" aria-current="page">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Design</a></li>
+                    <li><a href="#" id="nav-contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="search" aria-hidden="false">
+                <form role="search" action="#" method="get" aria-label="Site search" id="top-search-form">
+                    <label for="site-search" class="visually-hidden">Search</label>
+                    <input id="site-search" name="q" type="search" placeholder="Search courses or topics" autocomplete="off">
+                    <button type="submit" class="btn">Search</button>
+                </form>
+            </div>
+        </header>
+
+        <main class="hero" role="main" aria-labelledby="hero-title">
+            <h1 id="hero-title">Web Design & <br><span>Development</span> Course</h1>
+            <p class="muted">A friendly, beginner-focused course to help you learn modern web design and development.</p>
+            <p>
+                <a class="btn" href="#" role="button">Join Us</a>
+            </p>
+            <section aria-labelledby="features" style="margin-top:1.25rem;">
+                <h2 id="features" style="font-size:1rem;margin:0 0 .5rem;color:var(--muted)">What you'll learn</h2>
+                <ul style="margin:0;padding-left:1.25rem;color:var(--muted)">
+                    <li>Responsive layout and modern HTML/CSS</li>
+                    <li>Accessible forms and components</li>
+                    <li>Introduction to JavaScript and deployment</li>
+                </ul>
+            </section>
+        </main>
+
+        <aside class="card" role="complementary" aria-labelledby="login-title">
+            <h2 id="login-title" style="margin-top:0">Login</h2>
+
+            <form action="#" method="post" novalidate id="login-form">
+                <div class="form-group">
+                    <label for="email" class="muted">Email</label>
+                    <input id="email" name="email" type="email" placeholder="you@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="muted">Password</label>
+                    <input id="password" name="password" type="password" placeholder="Enter password" required>
+                </div>
+
+                <div style="display:flex;gap:.5rem;align-items:center">
+                    <button type="submit" class="btn">Login</button>
+                    <a href="#" class="muted" style="text-decoration:none;font-size:.95rem">Forgot password?</a>
+                </div>
+
+                <p class="muted" style="margin-top:.75rem;font-size:.95rem">Don't have an account? <a href="#" style="color:var(--accent)">Sign up</a></p>
+
+                <p class="muted" style="margin-top:.5rem;font-size:.9rem">Or login with</p>
+                <div style="display:flex;gap:.5rem;margin-top:.5rem">
+                    <button type="button" class="btn" style="background:#fff;color:#06203a">Google</button>
+                    <button type="button" class="btn" style="background:#1c7ed6;color:white">GitHub</button>
+                </div>
+            </form>
+        </aside>
+
+        <footer class="footer-note" role="contentinfo">
+            © <span id="year"></span> JEFF Web Studio — Built with accessible, modern HTML/CSS.
+        </footer>
+    </div>
+
+    <script>
+    (function () {
+        // Config / contact details
+        const whatsapp = '+254715796596';
+        const whatsappDigits = whatsapp.replace(/\D/g, '');
+        const waUrl = 'https://wa.me/' + whatsappDigits;
+        const fbUrl = 'https://web.facebook.com/jefferson.joseph.962390';
+        const mailTo = 'mailto:support@example.com?subject=' + encodeURIComponent('Contact — JEFF Web Studio');
+        const imgPath = 'Image 14.jpg';
+
+        // Small runtime nicety
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Background image + some injected styling for contrast
+        (function setBackground() {
+            const imgUrl = encodeURI(imgPath);
+            const overlay = 'linear-gradient(rgba(2,6,23,0.65), rgba(2,6,23,0.35))';
+            document.body.style.backgroundImage = overlay + ', url("' + imgUrl + '")';
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundPosition = 'center center';
+            document.body.style.backgroundRepeat = 'no-repeat';
+            document.body.style.backgroundAttachment = 'fixed';
+
+            const s = document.createElement('style');
+            s.textContent = '\
+                .container{backdrop-filter: blur(6px);}\
+                .card, .hero{background-color: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.04);}\
+                .logo{ -webkit-text-stroke: 0.3px rgba(0,0,0,0.15); }';
+            document.head.appendChild(s);
+        })();
+
+        // Wire top search form to Google (open results in a new tab)
+        (function wireSearch() {
+            const searchForm = document.getElementById('top-search-form');
+            const searchInput = document.getElementById('site-search');
+            if (!searchForm) return;
+            searchForm.setAttribute('action', 'https://www.google.com/search');
+            searchForm.setAttribute('method', 'get');
+            searchForm.setAttribute('target', '_blank');
+            if (searchInput) searchInput.setAttribute('name', 'q');
+
+            searchForm.addEventListener('submit', function (e) {
+                const q = searchInput && searchInput.value.trim();
+                if (!q) {
+                    window.open('https://www.google.com', '_blank');
+                    e.preventDefault();
+                    return;
+                }
+                // allow normal submission to Google
+            });
+        })();
+
+        // Login form: defensive redirect to external portal (keeps UI local)
+        (function wireLogin() {
+            const loginForm = document.getElementById('login-form');
+            if (!loginForm) return;
+            const masenoUrl = 'https://elearning.maseno.ac.ke/login/index.php';
+            loginForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                // in real app, you would validate and send credentials to your server
+                window.location.href = masenoUrl;
+            });
+        })();
+
+        // Footer contact augmentation
+        (function augmentFooter() {
+            const footer = document.querySelector('.footer-note');
+            if (!footer) return;
+            const p = document.createElement('p');
+            p.style.margin = '0.35rem 0 0';
+            p.style.fontSize = '0.95rem';
+            p.style.color = 'var(--muted)';
+            p.innerHTML = 'Contact: '
+                + '<a href="' + waUrl + '" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:none" aria-label="WhatsApp ' + whatsapp + '">WhatsApp: ' + whatsapp + '</a>'
+                + ' &nbsp;•&nbsp; '
+                + '<a href="' + fbUrl + '" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:none" aria-label="Facebook page">Facebook</a>';
+            footer.appendChild(p);
+        })();
+
+        // Nav: make Contact link a mailto by default, and provide a popover with options on click
+        (function contactPopover() {
+            const navContact = document.getElementById('nav-contact');
+            if (!navContact) return;
+            navContact.setAttribute('href', mailTo);
+            navContact.setAttribute('aria-label', 'Contact JEFF Web Studio via email');
+            navContact.setAttribute('aria-haspopup', 'dialog');
+            navContact.setAttribute('aria-expanded', 'false');
+
+            // Popover element (hidden until opened)
+            const pop = document.createElement('div');
+            pop.className = 'contact-popover';
+            pop.setAttribute('role', 'dialog');
+            pop.setAttribute('aria-label', 'Contact options');
+            pop.style.display = 'none';
+            pop.innerHTML = ''
+                + '<div style="display:flex;flex-direction:column;gap:.45rem">'
+                + '  <button data-action="email" class="contact-opt" style="padding:.5rem .6rem;border-radius:8px;border:none;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#06203a;font-weight:700;cursor:pointer">Email</button>'
+                + '  <button data-action="wa" class="contact-opt" style="padding:.5rem .6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--muted);cursor:pointer">WhatsApp</button>'
+                + '  <button data-action="fb" class="contact-opt" style="padding:.5rem .6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--muted);cursor:pointer">Facebook</button>'
+                + '  <button data-action="close" aria-label="Close contact options" style="padding:.4rem .6rem;border-radius:8px;border:none;background:transparent;color:var(--muted);text-align:left;cursor:pointer">Close</button>'
+                + '</div>';
+            document.body.appendChild(pop);
+
+            function openPopover() {
+                const r = navContact.getBoundingClientRect();
+                const left = Math.max(8, r.left);
+                const top = r.bottom + window.scrollY + 8;
+                pop.style.left = left + 'px';
+                pop.style.top = top + 'px';
+                pop.style.position = 'absolute';
+                pop.style.display = 'block';
+                navContact.setAttribute('aria-expanded', 'true');
+                const btn = pop.querySelector('button[data-action="email"]');
+                if (btn) btn.focus();
+            }
+            function closePopover() {
+                pop.style.display = 'none';
+                navContact.setAttribute('aria-expanded', 'false');
+                navContact.focus();
+            }
+
+            // Clicking contact opens the popover; preserve modifier keys to allow default behavior
+            navContact.addEventListener('click', function (e) {
+                if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) {
+                    // allow default (e.g., open mail client in new tab/window)
+                    return;
+                }
+                e.preventDefault();
+                if (pop.style.display === 'block') closePopover();
+                else openPopover();
+            });
+
+            // Handle button actions inside popover
+            pop.addEventListener('click', function (e) {
+                const btn = e.target.closest('button');
+                if (!btn) return;
+                const action = btn.getAttribute('data-action');
+                if (action === 'email') {
+                    window.location.href = mailTo;
+                } else if (action === 'wa') {
+                    window.open(waUrl, '_blank', 'noopener');
+                } else if (action === 'fb') {
+                    window.open(fbUrl, '_blank', 'noopener');
+                } else if (action === 'close') {
+                    closePopover();
+                }
+                setTimeout(closePopover, 250);
+            });
+
+            // Close on Escape or click outside
+            document.addEventListener('keydown', function (ev) {
+                if (ev.key === 'Escape' && pop.style.display === 'block') closePopover();
+            });
+            document.addEventListener('click', function (ev) {
+                if (pop.style.display !== 'block') return;
+                if (!pop.contains(ev.target) && ev.target !== navContact) closePopover();
+            });
+        })();
+
+        // Card buttons (Google / GitHub) behaviour
+        (function cardButtons() {
+            const searchInput = document.getElementById('site-search');
+            const cardButtons = document.querySelectorAll('.card button[type="button"]');
+            if (!cardButtons || cardButtons.length === 0) return;
+            const googleBtn = cardButtons[0];
+            const githubBtn = cardButtons[1];
+            if (googleBtn) {
+                googleBtn.addEventListener('click', function () {
+                    const q = searchInput && searchInput.value.trim();
+                    const url = q ? ('https://www.google.com/search?q=' + encodeURIComponent(q)) : 'https://www.google.com';
+                    window.open(url, '_blank');
+                });
+            }
+            if (githubBtn) {
+                githubBtn.addEventListener('click', function () {
+                    window.open('https://github.com', '_blank');
+                });
+            }
+        })();
+
+        // Accessibility / typography improvements (lightweight)
+        (function enhanceTypography() {
+            document.body.style.fontSize = '17px';
+            document.documentElement.style.setProperty('--muted', '#cbd6e6');
+            document.documentElement.style.setProperty('--bg', '#071225');
+            document.documentElement.style.setProperty('--card', 'rgba(8,12,20,0.85)');
+            document.documentElement.style.setProperty('--accent', '#06b6d4');
+            document.documentElement.style.setProperty('--accent-2', '#60a5fa');
+            document.body.style.color = '#f1f8ff';
+
+            const s2 = document.createElement('style');
+            s2.textContent = '\
+            .logo{ font-size:1.35rem; font-weight:800; }\
+            .hero h1{ font-size:2.25rem; color: #ffffff; text-shadow: 0 1px 0 rgba(0,0,0,0.35); }\
+            .hero h1 span{ color: var(--accent); }\
+            .hero p, .muted, aside.card, main.hero { color: rgba(241,248,255,0.92); }\
+            nav a{ color: rgba(226,236,247,0.92); font-weight:700; }\
+            nav a:hover{ color: #ffffff; }\
+            .search input[type=\"search\"], input[type=\"email\"], input[type=\"password\"]{ color: #f7fbff; border-color: rgba(255,255,255,0.08); }\
+            .btn{ font-weight:800; color: #06203a; }\
+            .muted{ color: rgba(203,214,230,0.9); }\
+            .card, .hero{ background-color: rgba(8,12,20,0.72); border-color: rgba(255,255,255,0.05); }\
+            a:focus, button:focus, input:focus{ outline: 3px solid rgba(96,165,250,0.25); outline-offset: 2px; }';
+            document.head.appendChild(s2);
+        })();
+
+    })();
+    </script>
+</body>
+</html>
